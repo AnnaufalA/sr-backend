@@ -5,10 +5,10 @@ from spotipy.oauth2 import SpotifyClientCredentials
 
 load_dotenv()
 
-def get_spotify_client():
-    SPOTIPY_CLIENT_ID= os.getenv("SPOTIPY_CLIENT_ID")
-    SPOTIPY_CLIENT_SECRET= os.getenv("SPOTIPY_CLIENT_SECRET")
+SPOTIPY_CLIENT_ID = "bdc294278dba454abccbb05182e18d95"  
+SPOTIPY_CLIENT_SECRET = "5d9987b0d220439992eb15c2da72a712"
 
+def get_spotify_client():
     print("Spotify ID:", SPOTIPY_CLIENT_ID)
     print("Spotify Secret:", SPOTIPY_CLIENT_SECRET)
 
