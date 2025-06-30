@@ -1,6 +1,7 @@
 import requests
 from deep_translator import GoogleTranslator
 from config import config
+import traceback
 
 huggingface_auth_success = False
 
@@ -158,4 +159,5 @@ def detect_emotion_from_text(text):
         
     except Exception as e:
         print("Exception HuggingFace:", str(e))  # DEBUG di except
+        print(traceback.format_exc())     # Tambahkan baris ini agar print traceback (stacktrace error)
         return keyword_emotion
