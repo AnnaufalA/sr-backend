@@ -106,6 +106,7 @@ def map_emotion_to_supported(emotion):
     return mapping.get(emotion, "neutral")
 
 def detect_emotion_from_text(text):
+    print("=== MASUK FUNGSI detect_emotion_from_text ===", text)   # Tambahkan ini!
     global huggingface_auth_success
     
     if not hasattr(detect_emotion_from_text, '_auth_tested'):
