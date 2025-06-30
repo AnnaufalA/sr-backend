@@ -1,7 +1,10 @@
 import requests
 from deep_translator import GoogleTranslator
 from config import config
-import traceback
+import logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("emotion-debug")
+
 
 huggingface_auth_success = False
 
@@ -107,16 +110,16 @@ def map_emotion_to_supported(emotion):
     return mapping.get(emotion, "neutral")
 
 def detect_emotion_from_text(text):
-    print("=== MASUK FUNGSI detect_emotion_from_text ===", text)   # Tambahkan ini!
+    logger.info("MASUK FUNGSI detect_emotion_from_text: %s", text) #debug
     global huggingface_auth_success
     
     if not hasattr(detect_emotion_from_text, '_auth_tested'):
         huggingface_auth_success = test_huggingface_auth()
         detect_emotion_from_text._auth_tested = True
 
-    # keyword_emotion = detect_emotion_from_keywords(text)
-    # if keyword_emotion != "neutral":
-    #     return keyword_emotion
+    keyword_emotion = detect_emotion_from_keywords(text)
+    if keyword_emotion != "neutral":
+        return keyword_emotion
 
     if not config.HUGGINGFACE_API_KEY or not huggingface_auth_success:
         return keyword_emotion
@@ -127,18 +130,9 @@ def detect_emotion_from_text(text):
 
     try:
         # === DEBUG MULAI DI SINI ===
-        print("\n==== HuggingFace REQUEST ====")
-        print("Text:", english_text)
-        print("Headers:", headers)
-        print("Payload:", payload)
-        print("API_URL:", config.HUGGINGFACE_EMOTION_API_URL)
-        
+        logger.info("HuggingFace REQUEST: %s", payload)
         response = requests.post(config.HUGGINGFACE_EMOTION_API_URL, headers=headers, json=payload)
-
-        # === DEBUG SESUDAH REQUEST ===
-        print("==== HuggingFace RESPONSE ====")
-        print("Status Code:", response.status_code)
-        print("Response Text:", response.text)
+        logger.info("HuggingFace RESPONSE: %s %s", response.status_code, response.text)
         
         response.raise_for_status()
         result = response.json()
@@ -158,6 +152,6 @@ def detect_emotion_from_text(text):
         return keyword_emotion
         
     except Exception as e:
-        print("Exception HuggingFace:", str(e))  # DEBUG di except
-        print(traceback.format_exc())     # Tambahkan baris ini agar print traceback (stacktrace error)
+        logger.error("Exception HuggingFace: %s", str(e))
+        logger.error(traceback.format_exc())
         return keyword_emotion
