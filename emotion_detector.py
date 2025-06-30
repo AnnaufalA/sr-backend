@@ -113,9 +113,9 @@ def detect_emotion_from_text(text):
         huggingface_auth_success = test_huggingface_auth()
         detect_emotion_from_text._auth_tested = True
 
-    keyword_emotion = detect_emotion_from_keywords(text)
-    if keyword_emotion != "neutral":
-        return keyword_emotion
+    # keyword_emotion = detect_emotion_from_keywords(text)
+    # if keyword_emotion != "neutral":
+    #     return keyword_emotion
 
     if not config.HUGGINGFACE_API_KEY or not huggingface_auth_success:
         return keyword_emotion
