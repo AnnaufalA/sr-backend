@@ -13,6 +13,7 @@ router = APIRouter()
 
 @router.post("/detect-emotion", response_model=EmotionResponse)
 def detect_emotion(data: EmotionRequest):
+    print("=== MASUK ENDPOINT /detect-emotion ===", data.text)   # DEBUG
     try:
         emotion = detect_emotion_from_text(data.text)
         return EmotionResponse(emotion=emotion, keyword=emotion)
