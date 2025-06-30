@@ -124,7 +124,20 @@ def detect_emotion_from_text(text):
     payload = {"inputs": english_text}
 
     try:
+        # === DEBUG MULAI DI SINI ===
+        print("\n==== HuggingFace REQUEST ====")
+        print("Text:", english_text)
+        print("Headers:", headers)
+        print("Payload:", payload)
+        print("API_URL:", config.HUGGINGFACE_EMOTION_API_URL)
+        
         response = requests.post(config.HUGGINGFACE_EMOTION_API_URL, headers=headers, json=payload)
+
+        # === DEBUG SESUDAH REQUEST ===
+        print("==== HuggingFace RESPONSE ====")
+        print("Status Code:", response.status_code)
+        print("Response Text:", response.text)
+        
         response.raise_for_status()
         result = response.json()
 
@@ -142,5 +155,6 @@ def detect_emotion_from_text(text):
         
         return keyword_emotion
         
-    except:
+    except Exception as e:
+        print("Exception HuggingFace:", str(e))  # DEBUG di except
         return keyword_emotion
