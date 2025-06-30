@@ -9,6 +9,9 @@ def get_spotify_client():
     SPOTIPY_CLIENT_ID= os.getenv("SPOTIPY_CLIENT_ID")
     SPOTIPY_CLIENT_SECRET= os.getenv("SPOTIPY_CLIENT_SECRET")
 
+    print("Spotify ID:", SPOTIPY_CLIENT_ID)
+    print("Spotify Secret:", SPOTIPY_CLIENT_SECRET)
+
     if not SPOTIPY_CLIENT_ID or not SPOTIPY_CLIENT_SECRET:
         raise Exception("Spotify credentials not found")
     
